@@ -15,7 +15,7 @@ const getFacebookAccessToken = (facebookCode, cb) => {
 
     request(url, (err, response, body) => {
         if (err) cb(err)
-        else cb(null, JSON.parse(body).access_token)
+        else cb(null, JSON.parse(body).access_token, JSON.parse(body).expires_in)
     })
 }
 

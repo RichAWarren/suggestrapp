@@ -1,14 +1,17 @@
-const accessTokenValidation = require('../../helpers/access-token-validation.js');
+const validateTokenDate = require('../../helpers/access-token-date-validation.js');
 
 module.exports = {
 
     method: 'GET',
     path: '/api/user-suggestions',
     handler: (req, reply) => {
-        accessTokenValidation(req.state.token, (err, is_valid) => {
+        validateTokenDate(req.state.token, (err, is_valid) => {
             if (err) throw err;
-            reply(is_valid)
-                .state('cheese', 'toast')
+            if (is_valid) {
+                reply(is_valid)
+            } else {
+                reply().redirect('/')
+            }
         })
     }
 }

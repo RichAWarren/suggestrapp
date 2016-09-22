@@ -1,11 +1,12 @@
 const jwt = require('jwt-simple')
 
-const jwtToken = (id, name, accessToken) => {
+const jwtToken = (id, name, accessToken, tokenExpire) => {
   // Create body for jwtToken
     const jwtTokenContent = {
         name: name,
         id: id,
-        access_token: accessToken
+        access_token: accessToken,
+        token_expire: tokenExpire
     }
 
   // Create a web token with jwt-simple
