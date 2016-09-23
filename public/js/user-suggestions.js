@@ -5,7 +5,7 @@ function getUserSuggestions () {
             if ('http://suggestr.com:8000/api/user-suggestions' !== xhr.responseURL) {
                 window.location.href = xhr.responseURL;
             } else {
-                console.log("no redirect detected")
+                console.log(JSON.parse(xhr.response))
             }
         }
     }
@@ -14,4 +14,4 @@ function getUserSuggestions () {
     xhr.send();
 }
 
-// getUserSuggestions();
+getUserSuggestions();

@@ -5,9 +5,8 @@ DROP TABLE IF EXISTS films CASCADE;
 DROP TABLE IF EXISTS interactions CASCADE;
 
 CREATE TABLE users (
-    facebook_id serial PRIMARY KEY,
-    name varchar(50),
-    film_ids varchar(2000)
+    facebook_id varchar(100) PRIMARY KEY,
+    name varchar(50)
     );
 
 CREATE TABLE groups (
@@ -30,13 +29,21 @@ CREATE TABLE films (
 
 CREATE TABLE interactions (
     interaction_id serial PRIMARY KEY,
-    user_recommend_id int,
+    user_id varchar(100),
+    user_recommend_id varchar(100),
     film_id int,
     group_id int,
-    film_delete_ids boolean
+    film_delete_ids varchar(500) DEFAULT 'no',
+    film_add boolean,
+    interaction_date int
 );
 
 ALTER TABLE interactions ADD CONSTRAINT interactions_to_user_fk
+    FOREIGN KEY (user_id)
+    REFERENCES users (facebook_id)
+    ON DELETE CASCADE;
+
+ALTER TABLE interactions ADD CONSTRAINT interactions_to_user_recommend_fk
     FOREIGN KEY (user_recommend_id)
     REFERENCES users (facebook_id)
     ON DELETE CASCADE;
@@ -52,6 +59,13 @@ ALTER TABLE interactions ADD CONSTRAINT interactions_to_group_fk
     ON DELETE CASCADE;
 
 COMMIT;
+
+-- SELECT (film_id, user_recommend_id, group_id, interaction_date) FROM interactions i
+--     WHERE $1 = user_id AND film_add = true AND film_delete_ids != $1
+--     JOIN films f on i.film_id = f.film_id
+--     ORDER BY i.interaction_date ASC;
+
+
 
 -- select * from people p join races r on p.person_id = r.person_id join lap_times l on r.race_id = l.race_id;
 --
