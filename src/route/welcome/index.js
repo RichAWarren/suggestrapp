@@ -9,14 +9,18 @@ module.exports = {
     path: '/welcome',
     handler: (req, reply) => {
     // Use facebook access code to get facebook access token
-        getFacebookAccessToken(req.query.code, (err, accessToken) => {
+        getFacebookAccessToken(req.query.code, (err, accessToken, expireIn) => {
             if (err) throw error
 
             // Get user details for access_token
-            getFacebookUserDetailsForAccessToken(accessToken, (err, {id, name}) => {
+            getFacebookUserDetailsForAccessToken(accessToken, expireIn, (err, {id, name}) => {
                 if (err) throw err
+                var options = {
+                    ttl: expireIn
+                }
+                var tokenExpire = new Date().getTime() + expireIn
                 reply.redirect('/dashboard.html')
-                   .state('token', jwtToken(id, name, accessToken))
+                   .state('token', jwtToken(id, name, accessToken, tokenExpire), options)
             })
         })
     }

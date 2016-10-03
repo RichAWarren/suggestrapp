@@ -3,11 +3,15 @@ const staticfile = require('./route/staticfile.js');
 const login = require('./route/login.js');
 const welcome = require('./route/welcome/index.js')
 const userSuggestions = require('./route/dashboard/user-suggestions.js');
+const pg = require('pg');
+const env = require('env2')
 
 // Load environment variables
-const env = require('env2')
 env('config.env')
 
+//postgres url
+const postgresurl = process.env.URL ||'postgres://Daniel@127.0.0.1/suggestrapp'
+// create server
 const server = new Hapi.Server();
 
 server.connection({
