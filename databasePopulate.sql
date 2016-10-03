@@ -15,7 +15,9 @@ VALUES (1, '10157431068110344', null, 1, 1, 'no', true, 1);
 COMMIT;
 
 
-
+-- DELETE FROM interactions 
+-- WHERE user_id = '10157431068110344'
+-- AND film_id = 1;
 
 
 

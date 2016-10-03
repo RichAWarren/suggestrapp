@@ -5,7 +5,7 @@ const jwt = require('jwt-simple');
 module.exports = {
 
     method: 'GET',
-    path: '/api/user-suggestions',
+    path: '/api/get-user-suggestions',
     handler: (req, reply) => {
         validateTokenDate(req.state.token, (err, is_valid) => {
             if (err) throw err;
